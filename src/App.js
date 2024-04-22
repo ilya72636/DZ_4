@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import MainPage from './pages/mainPage/MainPage';
+import ErrorPage from './pages/errorPage/ErrorPage';
 
-function App() {
+const App = () => {
+  const [user, setUser] = useState({ name: '', lastname: '' });
+  const [isValidInput, setIsValidInput] = useState(false);
+
+  const handleInput = () => {
+    const name = prompt('Введите ваше имя:');
+    const lastname = prompt('Введите вашу фамилию:');
+    
+    if (name === 'John' && lastname === 'Johns') {
+      setIsValidInput(true);
+      setUser({ name, lastname });
+    } else {
+      setUser({ name, lastname });
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {!isValidInput ? (
+        <ErrorPage user={user} onInput={handleInput} />
+      ) : (
+        <MainPage user={user} />
+      )}
     </div>
   );
-}
+};
 
 export default App;
